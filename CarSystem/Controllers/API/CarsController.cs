@@ -18,9 +18,9 @@ namespace CarSystem.Controllers.API
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: api/Cars
-        public IQueryable<Car> GetCars()
+        public IEnumerable<Car> GetCars()
         {
-            return db.Cars;
+            return db.Cars.ToList();
         }
 
         // GET: api/Cars/5
