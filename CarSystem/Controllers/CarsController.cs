@@ -1,77 +1,128 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CarSystem.Models;
-using CarSystem.ViewModels;
 
 namespace CarSystem.Controllers
 {
     public class CarsController : Controller
     {
-        //Connection Type to DB
-        private ApplicationDbContext DB;
+        private ApplicationDbContext db = new ApplicationDbContext();
 
-        //Wrtie 'stor' then double Tab to get below action automatic
-        public CarsController()
+        // GET: Cars
+        public async Task<ActionResult> Index()
         {
-            DB = new ApplicationDbContext();
+            return View(await db.Cars.ToListAsync());
         }
 
-        // GET: Cars          
-        public ActionResult Index()
+        // GET: Cars/Details/5
+        public async Task<ActionResult> Details(short? id)
         {
-            return View();
-        }
-
-        public ActionResult Latest()
-        {
-            var car = new Car() { Make = "Toyota" };
-
-            var customers = new List<Customer>
+            if (id == null)
             {
-                new Customer { Name = "Isa"},
-                new Customer { Name = "Mahdi"},
-                new Customer { Name = "Zahraa Alnasr"}
-            };
-
-            var latestViewModel = new LatestCarViewModel()
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Car car = await db.Cars.FindAsync(id);
+            if (car == null)
             {
-                Car = car,
-                Customers = customers
-            };
-
-            return View(latestViewModel);
+                return HttpNotFound();
+            }
+            return View(car);
         }
 
-        public ActionResult DisplayToyota()
-        {
-
-            return View();
-        }
-
-        public ActionResult DisplayCars()
-        {
-            var CarsResult = DB.Car.ToList();
-            return View(CarsResult);
-            
-        }
-
-        public ActionResult AddCar()
+        // GET: Cars/Create
+        public ActionResult Create()
         {
             return View();
         }
 
-        public ActionResult saveCar(Car CarValues)
+        // POST: Cars/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create([Bind(Include = "Make,Model,Year,Type,Transmission,RatePerDay,ImageURL")] Car car)
         {
-            DB.Car.Add(CarValues);
-            DB.SaveChanges();
-            return RedirectToAction("DisplayCars", "Cars");
+            if (ModelState.IsValid)
+            {
+                db.Cars.Add(car);
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+
+            return View(car);
         }
 
+        // GET: Cars/Edit/5
+        public async Task<ActionResult> Edit(short? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Car car = await db.Cars.FindAsync(id);
+            if (car == null)
+            {
+                return HttpNotFound();
+            }
+            return View(car);
+        }
 
+        // POST: Cars/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit([Bind(Include = "ID,Make,Model,Year,Type,Transmission,RatePerDay,ImageURL")] Car car)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(car).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            return View(car);
+        }
 
+        // GET: Cars/Delete/5
+        public async Task<ActionResult> Delete(short? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Car car = await db.Cars.FindAsync(id);
+            if (car == null)
+            {
+                return HttpNotFound();
+            }
+            return View(car);
+        }
 
+        // POST: Cars/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteConfirmed(short id)
+        {
+            Car car = await db.Cars.FindAsync(id);
+            db.Cars.Remove(car);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }

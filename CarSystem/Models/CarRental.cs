@@ -1,42 +1,45 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CarSystem.Models
 {
-    public class CarRental
+    [Table("CarRental")]
+    public partial class CarRental
     {
-
         public int ID { get; set; }
-        [Required]
-        [Display(Name = "Car ID")]
-        public int CarID { get; set; }
 
-        [Required]
+        [Display(Name = "Car ID")]
+        public short CarID { get; set; }
+
         [Display(Name = "Customer ID")]
         public int CustomerID { get; set; }
 
-        [Required]
-        [Display(Name = "Employee ID")]
-        public int EmployeeID { get; set; }
+        public short EmployeeID { get; set; }
 
-        [Required]
+        [Column(TypeName = "datetime2")]
         [Display(Name = "Rental Date")]
+        [DataType(DataType.Date)]
         public DateTime RentalDate { get; set; }
 
-        [Required]
+        [Column(TypeName = "datetime2")]
         [Display(Name = "Return Date")]
-        public DateTime ReturnDate { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime? ReturnDate { get; set; }
 
-        [Required]
         [Display(Name = "Paid Amount")]
-        public int paidAmount { get; set; }
+        [DataType(DataType.Currency)]
+        public int PaidAmount { get; set; }
 
-        [Required]
+        [Column(TypeName = "datetime2")]
         [Display(Name = "Actual Returned Date")]
-        public DateTime ActualReturnDate { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime? ActualReturnDate { get; set; }
+
+        public virtual Car Car { get; set; }
+
+        public virtual Customer Customer { get; set; }
+
+        public virtual Employee Employee { get; set; }
     }
 }

@@ -30,11 +30,29 @@ namespace CarSystem.Models
             return new ApplicationDbContext();
         }
 
-        public DbSet<Car> Car { get; set; }
-        public DbSet<Customer> Customer { get; set; }
-        public DbSet<Employee> Employee { get; set; }
-        public DbSet<CarRental> CarRental { get; set; }
+        public virtual DbSet<Car> Cars { get; set; }
+        public virtual DbSet<CarRental> CarRentals { get; set; }
+        public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<Employee> Employees { get; set; }
 
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Car>()
+                .HasMany(e => e.CarRentals)
+                .WithRequired(e => e.Car)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Customer>()
+                .HasMany(e => e.CarRentals)
+                .WithRequired(e => e.Customer)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Employee>()
+                .HasMany(e => e.CarRentals)
+                .WithRequired(e => e.Employee)
+                .WillCascadeOnDelete(false);
+        }
     }
 }

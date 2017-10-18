@@ -13,22 +13,10 @@
                 <li>@Html.ActionLink("Home", "Index", "Home")</li>
                 <li>@Html.ActionLink("About", "About", "Home")</li>
                 <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                <li>@Html.ActionLink("Latest Car", "Latest", "Cars")</li>
-                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Car<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li>@Html.ActionLink("Display Cars", "DisplayCars", "Cars")</li>
-                        <li>@Html.ActionLink("Add Car", "AddCar", "Cars")</li>
-                        <li>@Html.ActionLink("Delete Car", "", "Cars")</li>                        
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Customer<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li>@Html.ActionLink("Display Customers", "CustomerResult", "Customer")</li>
-                        <li>@Html.ActionLink("Add Customer", "CreateCustomer", "Customer")</li>
-                        <li>@Html.ActionLink("Delete Customer", "", "Customer")</li>
-                    </ul>
-                </li>
+                <li>@Html.ActionLink("Cars", "Index", "Cars")</li>
+                <li>@Html.ActionLink("Customers", "Index", "Customers")</li>
+                <li>@Html.ActionLink("Employees", "Index", "Employees")</li>
+                <li>@Html.ActionLink("Rentals", "Index", "CarRentals")</li>
             </ul>
             @Html.Partial("_LoginPartial")
         </div>

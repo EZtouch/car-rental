@@ -1,8 +1,6 @@
 namespace CarSystem.Migrations
 {
-    using CarSystem.Models;
     using System;
-    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
@@ -11,7 +9,7 @@ namespace CarSystem.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(CarSystem.Models.ApplicationDbContext context)
@@ -28,13 +26,6 @@ namespace CarSystem.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
-                context.Employee.AddOrUpdate(                  
-                  new Employee { Name = "Andrew Peters" , Email = "Andrew@gmail.com" },
-                  new Employee { Name = "Brice Lambson" , Email = "Brice@gmail.com" },
-                  new Employee { Name = "Rowan Miller" , Email = "Rowan@gmail.co" }
-                );
-
-
         }
     }
-}   
+}
