@@ -12,6 +12,9 @@
 <table class="table">
     <tr>
         <th>
+            <label>Delete</label>
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Make)
         </th>
         <th>
@@ -38,6 +41,9 @@
 @foreach (var item in Model) {
     <tr>
         <td>
+            <input type="checkbox" data-id="@item.ID" />
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.Make)
         </td>
         <td>
@@ -59,11 +65,19 @@
             @Html.DisplayFor(modelItem => item.ImageURL)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionLink("Edit", "Edit", new {id = item.ID}) |
+            @Html.ActionLink("Details", "Details", new {id = item.ID}) |
+            @*@Html.ActionLink("Delete", "Delete", new { id=item.ID })*@
+            <button class="delete-btn btn-link" data-id="@item.ID">Delete</button>
         </td>
     </tr>
 }
 
 </table>
+
+<button id="delete-all">Delete Selected</button>
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/site")
+}
