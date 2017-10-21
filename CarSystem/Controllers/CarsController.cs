@@ -11,6 +11,7 @@ using CarSystem.Models;
 
 namespace CarSystem.Controllers
 {
+    [Authorize]
     public class CarsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
