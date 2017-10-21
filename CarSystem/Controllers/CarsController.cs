@@ -116,6 +116,18 @@ namespace CarSystem.Controllers
             return RedirectToAction("Index");
         }
 
+        public async Task<ActionResult> CarFilter()
+        {
+            var makes = await db.Cars.Select(c => c.Make).Distinct().ToListAsync();
+            return View(makes);
+        }
+
+        public async Task<ActionResult> AjaxFilter(string make)
+        {
+            var cars = await db.Cars.Where(c => c.Make == make).ToListAsync();
+            return PartialView(cars);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -1,0 +1,23 @@
+﻿@model IEnumerable<string>
+
+@{
+    ViewBag.Title = "Ajax Filter";
+}
+
+<h2>Car Filter</h2>
+
+@foreach (var make in Model)
+{
+    @Ajax.ActionLink(make, "AjaxFilter", new { make = make }, new AjaxOptions
+    {
+        HttpMethod = "GET",
+        UpdateTargetId = "car-table",
+        InsertionMode = InsertionMode.Replace
+    }, new {@class = "btn btn-default"})
+    <br/> <br/>
+}
+<div id="car-table"></div>
+@section scripts
+{
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+}
