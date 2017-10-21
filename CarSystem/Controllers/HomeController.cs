@@ -8,11 +8,13 @@ namespace CarSystem.Controllers
 {
     public class HomeController : Controller
     {
+        [OutputCache(Duration = 60)]
         public ActionResult Index()
         {
             return View();
         }
 
+        [OutputCache(Duration = 60)]
         public ActionResult About()
         {
             ViewBag.Message = "About Text";
@@ -20,7 +22,8 @@ namespace CarSystem.Controllers
 
             return View();
         }
-
+        
+        [OutputCache(Duration = 60)]
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
