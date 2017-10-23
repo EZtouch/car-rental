@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Net;
+using System.Web.Mvc;
 
 namespace CarSystem.Controllers
 {
@@ -6,46 +7,46 @@ namespace CarSystem.Controllers
     {
         public ActionResult Index()
         {
-            Response.StatusCode = 500;
-            ViewBag.Name = "Error";
-            ViewBag.Description = "Uh oh. An unexpected error has occured, sorry!";
+            Response.TrySkipIisCustomErrors = true;
+            Response.StatusCode = (int) HttpStatusCode.InternalServerError;
             return View("Error");
         }
 
         public ActionResult BadRequest()
         {
-            Response.StatusCode = 400;
+            Response.StatusCode = (int) HttpStatusCode.BadRequest;
             ViewBag.Name = "Error - Bad Request";
-            ViewBag.Description =
-                "The request cannot be fulfilled due to bad syntax. If you believe that this is a mistake, please contact the system administrator.";
+            ViewBag.Description = "The request cannot be fulfilled due to bad syntax. If you believe that this is a mistake, please contact the system administrator.";
             return View("Error");
         }
 
         public ActionResult Forbidden()
         {
-            Response.StatusCode = 403;
+            Response.StatusCode = (int) HttpStatusCode.Forbidden;
             ViewBag.Name = "Error - Forbidden";
-            ViewBag.Description =
-                "Forbidden: You don't have permission to access this page or resource. If you believe that this is a mistake, please contact the system administrator.";
+            ViewBag.Description = "Forbidden: You don't have permission to access this page or resource. If you believe that this is a mistake, please contact the system administrator.";
             return View("Error");
         }
 
         public ActionResult NotFound()
         {
-            Response.StatusCode = 404;
+            Response.StatusCode = (int) HttpStatusCode.NotFound;
             ViewBag.Name = "Error - Not Found";
-            ViewBag.Description =
-                "We are sorry, the page or resource you requested cannot be found. The URL may be misspelled or the page you're looking for is no longer available.. If you believe that this is a mistake, please contact the system administrator.";
+            ViewBag.Description = "We are sorry, the page or resource you requested cannot be found. The URL may be misspelled or the page you're looking for is no longer available.. If you believe that this is a mistake, please contact the system administrator.";
             return View("Error");
         }
 
         public ActionResult URLTooLong()
         {
-            Response.StatusCode = 414;
+            Response.StatusCode = (int) HttpStatusCode.RequestUriTooLong;
             ViewBag.Name = "Error - URL Too Long";
-            ViewBag.Description =
-                "The requested URL is too large to process. That’s all we know. If you believe that this is a mistake, please contact the system administrator.";
+            ViewBag.Description = "The requested URL is too large to process. That’s all we know. If you believe that this is a mistake, please contact the system administrator.";
             return View("Error");
+        }
+
+        public ActionResult ThrowURLTooLong()
+        {
+            return URLTooLong();
         }
     }
 }

@@ -1,13 +1,19 @@
 ﻿@model HandleErrorInfo
 @{
-    ViewBag.Title = ViewBag.Name;
+    ViewBag.Title = ViewBag.Name ?? "Error";
 }
 <div class="clearfix">
-    <h1 class="field-validation-error">@ViewBag.Name</h1>
+    <h1 class="field-validation-error">@ViewBag.Title</h1>
 </div>
-<div class="container">
     <div class="alert alert-warning">
-        @ViewBag.Description
+        @if (string.IsNullOrWhiteSpace(ViewBag.Description))
+        {
+            @:Uh oh. An unexpected error has occured, sorry!
+        }
+        else
+        {
+            @:@ViewBag.Description
+        }
     </div>
     @if (Model != null && HttpContext.Current.IsDebuggingEnabled)
     {
@@ -29,4 +35,3 @@
             }
         </div>
     }
-</div>
