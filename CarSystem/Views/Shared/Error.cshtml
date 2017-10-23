@@ -1,9 +1,32 @@
-﻿@model System.Web.Mvc.HandleErrorInfo
-
+﻿@model HandleErrorInfo
 @{
-    ViewBag.Title = "Error";
+    ViewBag.Title = ViewBag.Name;
 }
-
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
-
+<div class="clearfix">
+    <h1 class="field-validation-error">@ViewBag.Name</h1>
+</div>
+<div class="container">
+    <div class="alert alert-warning">
+        @ViewBag.Description
+    </div>
+    @if (Model != null && HttpContext.Current.IsDebuggingEnabled)
+    {
+        <div>
+            <p>
+                <b>Exception:</b> @Model.Exception.Message
+                <br />
+                <b>Controller:</b> @Model.ControllerName
+                <br />
+                <b>Action:</b> @Model.ActionName
+            </p>
+            @if (Model.Exception.StackTrace != null)
+            {
+                <div style="overflow: scroll">
+                    <pre>
+                        @Model.Exception.StackTrace
+                    </pre>
+                </div>
+            }
+        </div>
+    }
+</div>
