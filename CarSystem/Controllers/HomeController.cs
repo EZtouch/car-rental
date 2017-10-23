@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -48,6 +49,11 @@ namespace CarSystem.Controllers
         public ActionResult ByYear(int year, int month)
         {
             return Content(year + "-" + month);
+        }
+
+        public ActionResult CalculateSquareArea(double id)
+        {
+            return Content(Math.Pow(id, 2).ToString());
         }
     }
 }
